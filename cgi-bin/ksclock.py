@@ -4,12 +4,22 @@ import time
 def kiloseconds():
     tm = time.localtime()
     return (tm.tm_hour*3600+tm.tm_min*60+tm.tm_sec)/1000.0
-    #http://github.com/api/v2/json/blob/show/bavardage/kiloseconds/03fac33ed6be1f0a004319cf7b8449d6d5fb10f3
+    # http://github.com/api/v2/json/blob/show/bavardage/kiloseconds/03fac33ed6be1f0a004319cf7b8449d6d5fb10f3
 
-def image():
+def kilo_gmt():
+    tm = time.gmtime()
+    return (tm.tm_hour*3600+tm.tm_min*60+tm.tm_sec)/1000.0
+    
+def clock(type,**kwargs):
+    if 'tz' in kwargs:
+        shift = kwargs['tz']
+        ks = kilo_gmt() + shift*3.6
+    else:
+        ks = kiloseconds()
+    
     im = Image.open("kilosec.PNG")
     draw = ImageDraw.Draw(im)
     draw.line((im.size[0]/2, im.size[1]) + (im.size[0]/2,0), fill="#CED4C8", width=16)
-    draw.line((im.size[0]/2, im.size[1]) + (im.size[0]/2,im.size[1]-((kiloseconds()/86.4)*im.size[1])), fill="#88B0B8", width=10)
+    draw.line((im.size[0]/2, im.size[1]) + (im.size[0]/2,im.size[1]-((ks/86.4)*im.size[1])), fill="#88B0B8", width=10)
     return im
 
