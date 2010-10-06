@@ -9,17 +9,24 @@ def kiloseconds():
 def kilo_gmt():
     tm = time.gmtime()
     return (tm.tm_hour*3600+tm.tm_min*60+tm.tm_sec)/1000.0
-    
-def clock(type,**kwargs):
+
+
+def clock(kind,**kwargs):
     if 'tz' in kwargs:
         shift = kwargs['tz']
         ks = kilo_gmt() + shift*3.6
     else:
         ks = kiloseconds()
+    if kind is "line":
+        im = Image.open("kilosec.PNG")
+        draw = ImageDraw.Draw(im)
+        draw.line((im.size[0]/2, im.size[1]) + (im.size[0]/2,0), fill="#CED4C8", width=16)
+        draw.line((im.size[0]/2, im.size[1]) + (im.size[0]/2,im.size[1]-((ks/86.4)*im.size[1])), fill="#88B0B8", width=10)
+    elif kind is "arc":
+        im = Image.open("kilosec_round.PNG")
+        draw = ImageDraw.Draw(im)
+        draw.arc(im.size, 0, (kiloseconds()/86.4)*360, outline="#E67300")
+        
     
-    im = Image.open("kilosec.PNG")
-    draw = ImageDraw.Draw(im)
-    draw.line((im.size[0]/2, im.size[1]) + (im.size[0]/2,0), fill="#CED4C8", width=16)
-    draw.line((im.size[0]/2, im.size[1]) + (im.size[0]/2,im.size[1]-((ks/86.4)*im.size[1])), fill="#88B0B8", width=10)
     return im
 
