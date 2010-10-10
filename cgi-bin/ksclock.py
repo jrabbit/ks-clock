@@ -1,5 +1,6 @@
 import Image, ImageDraw
 import time
+import math
 
 def kiloseconds():
     tm = time.localtime()
@@ -26,7 +27,19 @@ def clock(kind,**kwargs):
         im = Image.open("kilosec_round.PNG")
         draw = ImageDraw.Draw(im)
         draw.arc(im.size, 0, (kiloseconds()/86.4)*360, outline="#E67300")
-        
+    elif kind is "composite":
+        im = Image.open("kscomposite.png")
+        draw = ImageDraw.Draw(im)
+        im.size
+        # deg = 360*(ks/86.4)
+        if im.size[0] > im.size[1]:
+            smallside = im.size[1]
+        elif im.size[1] > im.size[0]:
+            smallside = im.size[0]
+        else:
+            smallside = im.size[0]
+        radius = smallside*.80 #give 20% white space
+        cord_h = radius*(2-math.cos(2*math.pi*(ks/86.4)))
     
     return im
 
