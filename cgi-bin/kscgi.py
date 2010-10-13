@@ -7,7 +7,9 @@ cgitb.enable()
 def main():
     print "Content-type: image/png\n"
     #f = open("clock.png", "rw")
-    ksclock.image().save("clock.png")
+    if not kind:
+        kind = "line"
+    ksclock.clock(kind).save("clock.png")
     f = open("clock.png")
     print f.read()
 
