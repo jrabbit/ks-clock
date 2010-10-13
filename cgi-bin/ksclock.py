@@ -18,13 +18,15 @@ def clock(kind,**kwargs):
         ks = kilo_gmt() + shift*3.6
     else:
         ks = kiloseconds()
+    
     if kind == "line":
-        print "making line"
+        #print "making line"
         im = Image.open("kilosec.PNG")
         draw = ImageDraw.Draw(im)
         draw.line((im.size[0]/2, im.size[1]) + (im.size[0]/2,0), fill="#CED4C8", width=16)
         draw.line((im.size[0]/2, im.size[1]) + (im.size[0]/2,im.size[1]-((ks/86.4)*im.size[1])), fill="#88B0B8", width=10)
         return im
+    
     elif kind == "arc":
         try:
             im = Image.open("kilosec_round.PNG")
@@ -36,6 +38,7 @@ def clock(kind,**kwargs):
         #90 degeres is bottom of circle.
         #draw.chord((5,5,im.size[0]-5, im.size[1]-5),  0, 120, fill="#E67300")
         return im
+    
     elif kind == "chord":
         try:
             im = Image.open("kilosec_round.PNG")
@@ -44,6 +47,7 @@ def clock(kind,**kwargs):
         draw = ImageDraw.Draw(im)
         draw.chord((5,5,im.size[0]-5, im.size[1]-5),  0, int((kiloseconds()/86.4)*360), fill="#E67300")
         return im
+    
     elif kind == "composite":
         try:
             im = Image.open("kscomposite.png")
@@ -62,13 +66,15 @@ def clock(kind,**kwargs):
         angle = math.degrees(2-math.cos(2*math.pi*(ks/86.4)/2))
         #ratio = .8*ks/86.4
         #angle = math.degrees(math.acos(ratio/2))
-        print angle
+        #print angle
         langle = int(angle - 90)*-1
         rangle = int(angle + 90)
-        draw.chord((int(.2*im.size[0]),int(.2*im.size[1]),int(im.size[0]*.8), int(im.size[1]*.8)), langle, rangle, outline="#E67300")
+        draw.chord((int(.2*im.size[0]),int(.2*im.size[1]),int(im.size[0]*.8), int(im.size[1]*.8)), langle, rangle, outline="#E67300", fill="#E67300")
         return im
+        
     else:
-        print "Error"
+        pass
+
 
 if __name__ == '__main__':
     import sys
