@@ -1,4 +1,4 @@
-from wsgiref.simple_server import make_server, demo_app
+#from wsgiref.simple_server import make_server, demo_app
 import ksclock
 
 def ks_app(environ, start_response):
@@ -11,10 +11,10 @@ def ks_app(environ, start_response):
         clock = ksclock.clock("line").save("clock.png")
     f = open("clock.png")
     return f.read()
-httpd = make_server('', 8000, ks_app)
+#httpd = make_server('', 8000, ks_app)
 # httpd = make_server('', 8000, demo_app)
 
-print "Serving on port 8000..."
+#print "Serving on port 8000..."
 
 # Serve until process is killed
-httpd.serve_forever()
+#httpd.serve_forever()
